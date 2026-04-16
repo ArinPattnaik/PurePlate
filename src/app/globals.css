@@ -1,26 +1,223 @@
 @import "tailwindcss";
 
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  
+  --font-sans: var(--font-clash-display), var(--font-inter), sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
+/*
+  The default theme is our premium deep dark mode.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 0 0% 4%; /* #0A0A0A */
+  --foreground: 0 0% 98%;
+
+  --card: 0 0% 4%;
+  --card-foreground: 0 0% 98%;
+
+  --popover: 0 0% 4%;
+  --popover-foreground: 0 0% 98%;
+
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 98%;
+
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
+  --ring: 0 0% 83.1%;
+  --radius: 0.75rem;
+
+  /* Custom Neon ACCENTS */
+  --neon-emerald: 154 99% 50%;
+  --neon-amber: 35 100% 50%;
+  --neon-rose: 337 100% 50%;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  @apply border-border;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-background text-foreground;
+}
+
+/* 
+  PurePlate Custom Styles
+*/
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: #E0005C;
+  color: inherit;
+}
+
+/* Hide scrollbar but keep scrollable */
+::-webkit-scrollbar-button {transition: 0ms !important;width: 0px;height: 0px;}
+::-webkit-scrollbar-track {background: transparent;}
+::-webkit-scrollbar-thumb {-webkit-border-radius: 0px;border-radius: 0px;background: transparent;opacity:0;}
+::-webkit-resizer {width: 0px;height: 0px;}
+::-webkit-scrollbar {width: 0px;}
+
+/* Grain texture overlay */
+.grain_texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 2px 2px;
+  opacity: 0.15;
+  z-index: 10;
+}
+
+/* Dotted decorative line */
+.dotted_line {
+  height: 4px;
+  width: 100%;
+  background-image: repeating-radial-gradient(
+    circle,
+    #f7ac32 0,
+    #f7ac32 2px,
+    transparent 2px,
+    transparent 10px
+  );
+  background-size: 10px 4px;
+  background-repeat: repeat-x;
+  image-rendering: pixelated;
+}
+
+/* Tabular numbers for counters */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Product card hover glow effect */
+.product-card-glow {
+  position: relative;
+}
+.product-card-glow::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: linear-gradient(135deg, rgba(247, 172, 50, 0.15), transparent, rgba(247, 172, 50, 0.1));
+  pointer-events: none;
+}
+.product-card-glow:hover::after {
+  opacity: 1;
+}
+
+/* Veg / Non-Veg FSSAI-style indicator */
+.veg-indicator {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #22c55e;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.veg-indicator::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+.nonveg-indicator {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #E0005C;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nonveg-indicator::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #E0005C;
+}
+
+/* Smooth pulse for loading states */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+.animate-subtle-pulse {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+/* Category chip active glow */
+.category-chip-active {
+  box-shadow: 0 0 15px -3px rgba(247, 172, 50, 0.4);
+}
+
+/* Score badge shimmer */
+@keyframes score-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Table row highlight on hover */
+tr.flagged-row:hover {
+  background: rgba(224, 0, 92, 0.05);
+}
+
+/* Drawer slide-in shadow */
+.drawer-shadow {
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
 }
