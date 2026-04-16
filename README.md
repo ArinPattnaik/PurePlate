@@ -27,29 +27,6 @@ PurePlate is an algorithmic food transparency platform that analyzes the ingredi
 - **AI Augmentation**: Google Gemini 2.5 Flash
 - **Image Fallback**: Open Food Facts API + Branded SVG Placeholders
 
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
-Open [http://localhost:3000](http://localhost:3000) to see the platform.
-
-## Environment Variables
-
-Create a `.env.local` file:
-
-```env
-# Google Gemini API key (optional - local database works without it)
-GEMINI_API_KEY=your_key_here
-```
 
 ## Project Structure
 
