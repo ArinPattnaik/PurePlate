@@ -15,7 +15,7 @@ export const IngredientPill: React.FC<IngredientPillProps> = ({ name }) => {
 
   // Attempt to extract INS code if present
   const insMatch = name.match(/INS\s*(\d+[a-zA-Z]?)/i);
-  let insCode = insMatch ? insMatch[1].toLowerCase() : null;
+  const insCode = insMatch ? insMatch[1].toLowerCase() : null;
   
   const insData: INSEntry | undefined = insCode ? insDictionary[insCode] : undefined;
 

@@ -156,13 +156,13 @@ IMPORTANT: Provide REAL ingredients from actual product labels. Return ONLY vali
         model: 'gemini-2.5-flash',
         contents: prompt,
       });
-      rawText = ((response as any).text || '').trim().replace(/```json/g, '').replace(/```/g, '').trim();
+      rawText = ((response as { text?: string }).text ?? '').trim().replace(/```json/g, '').replace(/```/g, '').trim();
     } catch {
       // API failed, return local results only
       return NextResponse.json(localResults.map(p => gradeProduct(p)));
     }
 
-    let aiProducts: any[];
+    let aiProducts: Array<{ id?: string; name?: string; brand?: string; category?: string; description?: string; weight?: string; isVeg?: boolean; ingredients?: string[] }>;
     try {
       aiProducts = JSON.parse(rawText);
     } catch {
@@ -172,7 +172,7 @@ IMPORTANT: Provide REAL ingredients from actual product labels. Return ONLY vali
     // Merge: local results first, then AI results
     const allGraded = [
       ...localResults.map(p => gradeProduct(p)),
-      ...aiProducts.map((item: any) => gradeProduct({
+      ...aiProducts.map((item) => gradeProduct({
         id: item.id || `ai-${Math.random().toString(36).substring(7)}`,
         name: item.name || 'Unknown',
         brand: item.brand || 'Unknown',
@@ -195,12 +195,13 @@ IMPORTANT: Provide REAL ingredients from actual product labels. Return ONLY vali
     });
 
     return NextResponse.json(deduped.slice(0, 16));
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Search API Error:', error);
     // Even on error, return local results
     if (localResults.length > 0) {
       return NextResponse.json(localResults.map(p => gradeProduct(p)));
     }
-    return NextResponse.json({ error: 'Search failed', message: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ error: 'Search failed', message }, { status: 500 });
   }
 }
