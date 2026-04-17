@@ -36,14 +36,6 @@ export const IngredientPill: React.FC<IngredientPillProps> = ({ name }) => {
     }
   };
 
-  const getRiskBg = (risk: string) => {
-    switch (risk) {
-      case 'Safe': return 'bg-emerald-500/20';
-      case 'Caution': return 'bg-amber-500/20';
-      case 'High Risk': return 'bg-rose-500/20';
-      default: return 'bg-zinc-800';
-    }
-  };
 
   return (
     <div 

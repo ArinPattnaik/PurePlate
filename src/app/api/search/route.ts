@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { INS_DICTIONARY, RealProduct } from '@/lib/real-data';
-import { searchProducts, IndianProduct } from '@/lib/indian-products';
+import { searchProducts } from '@/lib/indian-products';
 
 // Convert an IndianProduct to a fully graded RealProduct
 function gradeProduct(item: { id: string; name: string; brand: string; category?: string; description?: string; weight?: string; isVeg?: boolean; ingredients: string[]; imageUrl?: string | null }): RealProduct {

@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Search, ShieldAlert, BadgeInfo, Menu, X, AlertTriangle, Loader2, Leaf, ChevronRight, Database, Beaker, Tag, ArrowRight, Sparkles } from 'lucide-react';
+import { Search, ShieldAlert, BadgeInfo, Menu, X, AlertTriangle, Loader2, Leaf, Database, Beaker, Tag, ArrowRight, Sparkles } from 'lucide-react';
 import { RealProduct } from '@/lib/real-data';
 import { CATEGORY_EMOJIS, type ProductCategory } from '@/lib/indian-products';
 import { DeepDiveTable } from '@/components/DeepDiveTable';
-import { AnimatedText } from '@/components/AnimatedText';
+
 import { MethodologyView } from '@/components/MethodologyView';
 import { cn } from '@/lib/utils';
 
@@ -59,6 +59,7 @@ const ProductImageCard = ({ product }: { product: RealProduct }) => {
   const brandColor = getBrandAccent(product.brand);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
     fetch(`/api/image?q=${encodeURIComponent(product.brand + ' ' + product.name)}&brand=${encodeURIComponent(product.brand)}&category=${encodeURIComponent(product.category || '')}`)
       .then(res => res.json())
@@ -174,6 +175,7 @@ export default function Home() {
   useEffect(() => {
     if (searchQuery.trim().length < 2) {
       if (searchQuery.trim().length === 0 && !activeCategory) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSearchResults([]);
       }
       setIsSearching(false);
