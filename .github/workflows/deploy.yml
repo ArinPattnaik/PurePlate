@@ -53,9 +53,6 @@ jobs:
           fi
 
       - name: Build project
-        env:
-          TARGET_ENV: ${{ github.event.inputs.environment }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           if [[ "$TARGET_ENV" == "production" ]]; then
             vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}

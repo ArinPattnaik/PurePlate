@@ -24,7 +24,6 @@ PurePlate is an algorithmic food transparency platform that analyzes the ingredi
 - **Styling**: Tailwind CSS v4
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **AI Augmentation**: Google Gemini 2.5 Flash
 - **Image Fallback**: Open Food Facts API + Branded SVG Placeholders
 
 
