@@ -2,7 +2,7 @@ name: Release & Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches: ["master"]
     paths-ignore:
       - 'docs/**'
       - '**.md'
@@ -30,7 +30,7 @@ jobs:
         id: check
         run: |
           COMMIT_MSG=$(git log -1 --pretty=%s)
-          if [[ "$COMMIT_MSG" == "chore(main): release"* ]]; then
+          if [[ "$COMMIT_MSG" == "chore(master): release"* ]]; then
             echo "Release-please version bump detected — skipping CI."
             echo "is_release_commit=true" >> $GITHUB_OUTPUT
           else
