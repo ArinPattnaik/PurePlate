@@ -1,0 +1,40 @@
+name: ✨ Feature Request
+description: Suggest a new product, additive, category, or platform feature for PurePlate
+title: "[FEATURE] "
+labels: ["type:feature"]
+body:
+  - type: checkboxes
+    id: area
+    attributes:
+      label: Which area is this for?
+      options:
+        - label: New product / brand addition
+        - label: New FMCG category
+        - label: INS code / additive database entry
+        - label: Transparency scoring improvement
+        - label: UI / UX enhancement
+        - label: AI analysis improvement (Gemini)
+        - label: API / data source integration
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the gap or frustration you're experiencing.
+      placeholder: "I can't find Britannia NutriChoice in the database even though it's a popular biscuit brand."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe your proposed solution
+      description: What would you like PurePlate to do?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you've considered
+      description: Any workarounds or other approaches?

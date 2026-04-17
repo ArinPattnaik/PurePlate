@@ -1,0 +1,127 @@
+name: Release & Deploy
+
+on:
+  push:
+    branches: ["main"]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.github/ISSUE_TEMPLATE/**'
+
+permissions:
+  contents: write
+  pull-requests: write
+  deployments: write
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Guard: skip everything on release-please bumps
+  # ──────────────────────────────────────────────
+  check-commit:
+    runs-on: ubuntu-latest
+    outputs:
+      is_release_commit: ${{ steps.check.outputs.is_release_commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect release-please version-bump commit
+        id: check
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+          if [[ "$COMMIT_MSG" == "chore(main): release"* ]]; then
+            echo "Release-please version bump detected — skipping CI."
+            echo "is_release_commit=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_release_commit=false" >> $GITHUB_OUTPUT
+          fi
+
+  # ──────────────────────────────────────────────
+  # CI: lint + type-check on every real push
+  # ──────────────────────────────────────────────
+  ci:
+    needs: check-commit
+    if: ${{ needs.check-commit.outputs.is_release_commit != 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run TypeScript type-check
+        run: npx tsc --noEmit
+
+  # ──────────────────────────────────────────────
+  # release-please: open / update the release PR
+  # ──────────────────────────────────────────────
+  release-please:
+    needs: [check-commit, ci]
+    if: ${{ needs.check-commit.outputs.is_release_commit != 'true' }}
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name:        ${{ steps.release.outputs.tag_name }}
+      version:         ${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+
+  # ──────────────────────────────────────────────
+  # Deploy: push to Vercel on every merged commit
+  # ──────────────────────────────────────────────
+  deploy:
+    needs: [check-commit, ci, release-please]
+    if: >-
+      always() &&
+      needs.check-commit.outputs.is_release_commit != 'true' &&
+      needs.ci.result == 'success' &&
+      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'cancelled')
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://pureplate.vercel.app
+    env:
+      VERCEL_ORG_ID:     ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel environment variables
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build (via Vercel)
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Deploy to Vercel
+        id: deploy
+        run: vercel deploy --prebuilt --prod --archive=tgz --token=${{ secrets.VERCEL_TOKEN }}

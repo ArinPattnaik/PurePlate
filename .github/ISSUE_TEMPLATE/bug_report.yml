@@ -1,0 +1,53 @@
+name: 🐛 Bug Report
+description: Report a problem with PurePlate — food search, transparency scores, or AI analysis
+title: "[BUG] "
+labels: ["type:bug"]
+body:
+  - type: checkboxes
+    id: area
+    attributes:
+      label: Which area is affected?
+      options:
+        - label: Product Search (local database)
+        - label: AI Augmentation (Gemini-powered results)
+        - label: Transparency Score / INS code analysis
+        - label: Product images / placeholders
+        - label: Methodology page or UI
+        - label: API route (search, image)
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+      placeholder: "When I search for 'Maggi', the transparency score shows 0 instead of the correct value."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: How can we trigger this bug?
+      placeholder: |
+        1. Go to pureplate.vercel.app
+        2. Search for '...'
+        3. Click on '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: input
+    id: product
+    attributes:
+      label: Product name (if applicable)
+      description: Which Indian food product were you looking up?
+      placeholder: "e.g. Lay's Classic Salted, Parle-G, Amul Butter"
