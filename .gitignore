@@ -37,13 +37,11 @@ yarn-error.log*
 .env.production
 .env.development
 
-# vercel
-.vercel
+# vercel — project.json is safe to commit (no secrets)
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
 
 /src/generated/prisma
