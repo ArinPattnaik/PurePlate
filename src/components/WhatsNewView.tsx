@@ -65,10 +65,10 @@ export function WhatsNewView() {
   const renderBody = (body: string) => {
     return body.split('\n').map((line, idx) => {
       if (line.startsWith('## ')) {
-        return <h3 key={idx} className="text-xl font-bold text-[#f7ac32] mt-6 mb-3">{line.replace('## ', '')}</h3>;
+        return <h3 key={idx} className="text-xl font-bold text-[#f7ac32] mt-6 mb-3">{renderInlineText(line.replace('## ', ''))}</h3>;
       }
       if (line.startsWith('### ')) {
-        return <h4 key={idx} className="text-lg font-bold text-[#f4ecd8] mt-5 mb-3">{line.replace('### ', '')}</h4>;
+        return <h4 key={idx} className="text-lg font-bold text-[#f4ecd8] mt-5 mb-3">{renderInlineText(line.replace('### ', ''))}</h4>;
       }
       if (line.startsWith('- ') || line.startsWith('* ')) {
         return (
