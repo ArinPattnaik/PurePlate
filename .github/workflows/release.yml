@@ -66,8 +66,6 @@ jobs:
   # release-please: open / update the release PR
   # ──────────────────────────────────────────────
   release-please:
-    needs: [check-commit, ci]
-    if: ${{ needs.check-commit.outputs.is_release_commit != 'true' }}
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
