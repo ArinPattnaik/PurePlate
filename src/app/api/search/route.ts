@@ -88,6 +88,13 @@ export async function GET(request: Request) {
   const query = searchParams.get('q');
   const category = searchParams.get('category');
   const trending = searchParams.get('trending');
+  const all = searchParams.get('all');
+
+  // All products endpoint
+  if (all === 'true') {
+    const { INDIAN_PRODUCTS } = await import('@/lib/indian-products');
+    return NextResponse.json(INDIAN_PRODUCTS.map(p => gradeProduct(p)));
+  }
 
   // Trending products endpoint
   if (trending === 'true') {

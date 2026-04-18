@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { IngredientPill } from '@/components/IngredientPill';
 
 export interface ProductData {
@@ -99,16 +98,7 @@ export const ProductCard: React.FC<{ data: ProductData }> = ({ data }) => {
             </div>
           </motion.div>
 
-          {data.imageUrl && (
-            <motion.div 
-              initial={{ filter: 'blur(10px)', opacity: 0 }}
-              animate={{ filter: 'blur(0px)', opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="mt-4 rounded-xl overflow-hidden custom-image-bg border border-white/5 relative group"
-            >
-              <Image src={data.imageUrl} alt={data.title} width={128} height={128} className="object-contain mix-blend-screen" />
-            </motion.div>
-          )}
+
         </div>
 
         {/* Right Col: Title & Ingredients */}

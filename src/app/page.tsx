@@ -8,6 +8,7 @@ import { CATEGORY_EMOJIS, type ProductCategory } from '@/lib/indian-products';
 import { DeepDiveTable } from '@/components/DeepDiveTable';
 
 import { MethodologyView } from '@/components/MethodologyView';
+import { WhatsNewView } from '@/components/WhatsNewView';
 import { cn } from '@/lib/utils';
 
 // ────────────────────────────────────────────────────────
@@ -54,42 +55,16 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 // Product image with lazy loading + branded placeholder
 // ────────────────────────────────────────────────────────
 const ProductImageCard = ({ product }: { product: RealProduct }) => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const brandColor = getBrandAccent(product.brand);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsLoading(true);
-    fetch(`/api/image?q=${encodeURIComponent(product.brand + ' ' + product.name)}&brand=${encodeURIComponent(product.brand)}&category=${encodeURIComponent(product.category || '')}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.imageUrl) setImageUrl(data.imageUrl);
-        setIsLoading(false);
-      })
-      .catch(() => setIsLoading(false));
-  }, [product.brand, product.name, product.category]);
 
   return (
     <div className="h-48 relative flex items-center justify-center overflow-hidden" style={{ background: `linear-gradient(135deg, ${brandColor}08, ${brandColor}15)` }}>
-      {isLoading ? (
-        <div className="flex flex-col items-center justify-center text-[#f4ecd8]/20 z-10">
-          <Loader2 className="w-6 h-6 animate-spin mb-1" />
-          <span className="text-[10px] uppercase tracking-widest font-mono">Loading</span>
-        </div>
-      ) : imageUrl ? (
-        <div 
-          className="absolute inset-0 bg-contain bg-center bg-no-repeat group-hover:scale-110 transition-transform duration-700"
-          style={{ backgroundImage: `url(${imageUrl})` }}
-        />
-      ) : (
-        <div className="flex flex-col items-center justify-center gap-2">
-          <span className="text-4xl">{CATEGORY_EMOJIS[product.category as ProductCategory] || '📦'}</span>
-          <span className="font-black text-sm opacity-20 tracking-tighter uppercase text-center px-4 line-clamp-1">
-            {product.brand}
-          </span>
-        </div>
-      )}
+      <div className="flex flex-col items-center justify-center gap-2 group-hover:scale-110 transition-transform duration-700">
+        <span className="text-5xl">{CATEGORY_EMOJIS[product.category as ProductCategory] || '📦'}</span>
+        <span className="font-black text-lg opacity-20 tracking-tighter uppercase text-center px-4 line-clamp-1 mt-2">
+          {product.brand}
+        </span>
+      </div>
       {/* Score Badge */}
       <div className="absolute bottom-2 left-2 z-10">
         <span className={cn(
@@ -159,7 +134,7 @@ export default function Home() {
   
   const [selectedProduct, setSelectedProduct] = useState<RealProduct | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeView, setActiveView] = useState<'home' | 'methodology'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'methodology' | 'whats-new'>('home');
 
   // Load trending products on mount
   useEffect(() => {
@@ -225,8 +200,29 @@ export default function Home() {
     setSelectedProduct(product);
   };
 
+  const handleViewAll = () => {
+    setActiveCategory('All Products');
+    setSearchQuery('');
+    setIsSearching(true);
+    fetch(`/api/search?all=true`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setSearchResults(data);
+        setIsSearching(false);
+      })
+      .catch(() => {
+        setIsSearching(false);
+      });
+  };
+
   const navToMethodology = () => {
     setActiveView('methodology');
+    setIsMenuOpen(false);
+    window.scrollTo(0, 0);
+  };
+
+  const navToWhatsNew = () => {
+    setActiveView('whats-new');
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
   };
@@ -294,10 +290,11 @@ export default function Home() {
               <button onClick={navToHome} className="hover:text-white text-left uppercase transition-colors">Home</button>
               <button onClick={() => navToDatabase()} className="hover:text-white text-left uppercase transition-colors">Database</button>
               <button onClick={navToMethodology} className="hover:text-white text-left uppercase transition-colors">Methodology</button>
+              <button onClick={navToWhatsNew} className="hover:text-white text-left uppercase transition-colors">What's New</button>
             </div>
             <div className="mt-auto pb-12 text-[#1c1a17]/60 font-mono text-sm uppercase tracking-widest">
-              <p>120+ Indian Products Indexed</p>
-              <p>55+ Chemical Additives Tracked</p>
+              <p>250+ Indian Products Indexed</p>
+              <p className="mt-2 text-xs">Based on NOVA Methodology</p>
             </div>
           </motion.div>
         )}
@@ -307,6 +304,8 @@ export default function Home() {
 
       {activeView === 'methodology' ? (
         <MethodologyView />
+      ) : activeView === 'whats-new' ? (
+        <WhatsNewView />
       ) : (
         <>
           {/* HERO SECTION */}
@@ -427,7 +426,7 @@ export default function Home() {
                     </h2>
                   </div>
                   <button 
-                    onClick={() => navToDatabase()}
+                    onClick={handleViewAll}
                     className="text-xs md:text-sm font-mono uppercase tracking-widest text-[#f7ac32] hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
                   >
                     View All <ArrowRight className="w-4 h-4" />
@@ -766,6 +765,7 @@ export default function Home() {
                 <button onClick={navToHome} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">Home</button>
                 <button onClick={navToDatabase} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">Database</button>
                 <button onClick={navToMethodology} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">Methodology</button>
+                <button onClick={navToWhatsNew} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">What's New</button>
               </div>
             </div>
             <div>
