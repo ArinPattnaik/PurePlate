@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.0.0...v1.1.0) (2026-04-18)
+
+
+### Features
+
+* complete What's New view, fix duplicate keys, and expand database to 250+ FMCG products ([0b72532](https://github.com/ArinPattnaik/PurePlate/commit/0b7253282c0b0368158bf771c3f0361141bc2d77))
+
+
+### Bug Fixes
+
+* resolve ESLint unescaped apostrophe errors and remove dev script to unblock CI pipeline ([efe252d](https://github.com/ArinPattnaik/PurePlate/commit/efe252dd3469ce95c8b5d9c23e4dcd152dbe62d2))
+
 ## 1.0.0 (2026-04-18)
 
 
