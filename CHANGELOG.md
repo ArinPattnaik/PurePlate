@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/ArinPattnaik/PurePlate/compare/v1.1.0...v1.1.1) (2026-04-18)
+
+
+### Bug Fixes
+
+* parse inline markdown links within headings in WhatsNewView ([3bef400](https://github.com/ArinPattnaik/PurePlate/commit/3bef4004a750891719657fe0578239224567de12))
+
 ## [1.1.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.0.0...v1.1.0) (2026-04-18)
 
 
