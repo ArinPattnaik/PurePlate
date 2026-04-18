@@ -290,7 +290,7 @@ export default function Home() {
               <button onClick={navToHome} className="hover:text-white text-left uppercase transition-colors">Home</button>
               <button onClick={() => navToDatabase()} className="hover:text-white text-left uppercase transition-colors">Database</button>
               <button onClick={navToMethodology} className="hover:text-white text-left uppercase transition-colors">Methodology</button>
-              <button onClick={navToWhatsNew} className="hover:text-white text-left uppercase transition-colors">What's New</button>
+              <button onClick={navToWhatsNew} className="hover:text-white text-left uppercase transition-colors">What&apos;s New</button>
             </div>
             <div className="mt-auto pb-12 text-[#1c1a17]/60 font-mono text-sm uppercase tracking-widest">
               <p>250+ Indian Products Indexed</p>
@@ -765,13 +765,13 @@ export default function Home() {
                 <button onClick={navToHome} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">Home</button>
                 <button onClick={navToDatabase} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">Database</button>
                 <button onClick={navToMethodology} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">Methodology</button>
-                <button onClick={navToWhatsNew} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">What's New</button>
+                <button onClick={navToWhatsNew} className="text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30 hover:text-[#f7ac32] transition-colors text-left cursor-pointer">What&apos;s New</button>
               </div>
             </div>
             <div>
               <h4 className="text-xs font-bold uppercase tracking-widest text-[#f4ecd8]/60 mb-3">Database</h4>
               <div className="flex flex-col gap-1.5 text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30">
-                <span>120+ Indian Products</span>
+                <span>250+ Indian Products</span>
                 <span>55+ Chemical Additives</span>
                 <span>12 FMCG Categories</span>
                 <span>Real Ingredient Data</span>

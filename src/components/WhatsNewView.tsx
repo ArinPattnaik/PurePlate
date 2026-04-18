@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatedText } from "./AnimatedText";
 import { GitBranch, Loader2, Tag, Calendar, AlertCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 
 interface GitHubRelease {
   id: number;
@@ -122,7 +122,7 @@ export function WhatsNewView() {
           <div className="bg-[#151311] border border-[#f7ac32]/20 p-8 rounded-sm text-center">
             <GitBranch className="w-12 h-12 text-[#f4ecd8]/20 mx-auto mb-4" />
             <h3 className="text-xl font-bold uppercase tracking-widest text-[#f4ecd8]/60 mb-2">No Releases Found</h3>
-            <p className="text-sm font-mono text-[#f4ecd8]/40">We haven't published any releases on GitHub yet.</p>
+            <p className="text-sm font-mono text-[#f4ecd8]/40">We haven&apos;t published any releases on GitHub yet.</p>
           </div>
         )}
 
