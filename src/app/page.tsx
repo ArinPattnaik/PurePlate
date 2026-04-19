@@ -69,10 +69,10 @@ const ProductImageCard = ({ product }: { product: RealProduct }) => {
       <div className="absolute bottom-2 left-2 z-10">
         <span className={cn(
           "text-[10px] uppercase font-black tracking-widest px-2 py-1 shadow-lg inline-flex items-center gap-1 rounded-sm",
-          product.transparencyScore < 4 ? "bg-[#E0005C] text-white" : 
-          product.transparencyScore < 7 ? "bg-[#f7ac32] text-[#1c1a17]" : "bg-emerald-500 text-white"
+          (product?.transparencyScore ?? 0) < 4 ? "bg-[#E0005C] text-white" : 
+          (product?.transparencyScore ?? 0) < 7 ? "bg-[#f7ac32] text-[#1c1a17]" : "bg-emerald-500 text-white"
         )}>
-          {product.transparencyScore}/10
+          {product?.transparencyScore ?? '?'}/10
         </span>
       </div>
       {/* Veg/Non-veg Badge */}
@@ -452,7 +452,7 @@ export default function Home() {
                           {product.name}
                         </h3>
                         <div className="mt-auto">
-                          {product.redFlags.length > 0 ? (
+                          {(product?.redFlags?.length ?? 0) > 0 ? (
                             <span className="text-[10px] uppercase font-bold tracking-widest text-[#E0005C] inline-flex items-center gap-1">
                               <AlertTriangle className="w-3 h-3" />
                               {product.redFlags.length} flags
@@ -578,7 +578,7 @@ export default function Home() {
                           )}
                           
                           <div className="mt-auto">
-                            {product.redFlags.length > 0 ? (
+                            {(product?.redFlags?.length ?? 0) > 0 ? (
                               <span className="text-[10px] uppercase font-bold tracking-widest text-[#E0005C] inline-flex items-center gap-1">
                                 <AlertTriangle className="w-3 h-3" />
                                 {product.redFlags.length} {product.redFlags.length === 1 ? 'flag' : 'flags'}

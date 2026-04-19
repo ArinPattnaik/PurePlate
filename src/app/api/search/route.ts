@@ -1,17 +1,30 @@
 import { NextResponse } from 'next/server';
-import { INS_DICTIONARY, RealProduct } from '@/lib/real-data';
-import { searchProducts } from '@/lib/indian-products';
 
-// Convert an IndianProduct to a fully graded RealProduct
-function gradeProduct(item: { id: string; name: string; brand: string; category?: string; description?: string; weight?: string; isVeg?: boolean; ingredients: string[]; imageUrl?: string | null }): RealProduct {
-  const ingredientsList: string[] = Array.isArray(item.ingredients) ? item.ingredients : Object.values(item.ingredients || {});
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5000';
+
+async function getInsDictionary() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/ins`, { next: { revalidate: 3600 } });
+    const data = await res.json();
+    const map: Record<string, any> = {};
+    for (const item of data) {
+      map[item.code] = item;
+    }
+    return map;
+  } catch (err) {
+    console.error("Failed to fetch INS dictionary from backend", err);
+    return {};
+  }
+}
+
+async function gradeProduct(item: any, insDictionary: Record<string, any>) {
+  const ingredientsList = Array.isArray(item.ingredients) ? item.ingredients : Object.values(item.ingredients || {});
   const allTextToScan = ingredientsList.join(' ').toUpperCase();
 
-  const redFlags = new Set<string>();
+  const redFlags = new Set();
   let transparencyScore = 8;
 
-  // Check all INS codes in dictionary
-  Object.keys(INS_DICTIONARY).forEach(code => {
+  Object.keys(insDictionary).forEach(code => {
     const justNumbers = code.replace('INS ', '');
     if (
       allTextToScan.includes(code.toUpperCase()) ||
@@ -19,7 +32,7 @@ function gradeProduct(item: { id: string; name: string; brand: string; category?
       allTextToScan.includes(`E${justNumbers}`) ||
       allTextToScan.includes(`E ${justNumbers}`)
     ) {
-      const entry = INS_DICTIONARY[code];
+      const entry = insDictionary[code];
       if (entry.risk === 'High') {
         redFlags.add(entry.name);
         transparencyScore -= 2;
@@ -30,7 +43,6 @@ function gradeProduct(item: { id: string; name: string; brand: string; category?
     }
   });
 
-  // Common stealth chemicals
   if (allTextToScan.includes('PALM OIL') || allTextToScan.includes('PALMOLEIN')) {
     redFlags.add('Palm Oil / Palmolein');
     transparencyScore -= 1;
@@ -63,7 +75,6 @@ function gradeProduct(item: { id: string; name: string; brand: string; category?
     redFlags.add('No Ingredients Data Found');
   }
 
-  // Boost score for clean products
   if (redFlags.size === 0 && ingredientsList.length > 0) {
     transparencyScore = Math.min(10, transparencyScore + 1);
   }
@@ -90,31 +101,38 @@ export async function GET(request: Request) {
   const trending = searchParams.get('trending');
   const all = searchParams.get('all');
 
-  // All products endpoint
+  const insDictionary = await getInsDictionary();
+
   if (all === 'true') {
-    const { INDIAN_PRODUCTS } = await import('@/lib/indian-products');
-    return NextResponse.json(INDIAN_PRODUCTS.map(p => gradeProduct(p)));
+    const res = await fetch(`${BACKEND_URL}/api/products`);
+    const products = await res.json();
+    const gradedProducts = await Promise.all((Array.isArray(products) ? products : []).map(p => gradeProduct(p, insDictionary)));
+    return NextResponse.json(gradedProducts);
   }
 
-  // Trending products endpoint
   if (trending === 'true') {
-    const { getTrendingProducts } = await import('@/lib/indian-products');
-    const trendingProducts = getTrendingProducts();
-    return NextResponse.json(trendingProducts.map(p => gradeProduct(p)));
+    // Arbitrary trending list using backend endpoint
+    const res = await fetch(`${BACKEND_URL}/api/products`);
+    const products = await res.json();
+    const trendingList = Array.isArray(products) ? products.slice(0, 10).sort(() => 0.5 - Math.random()) : [];
+    const gradedTrending = await Promise.all(trendingList.map(p => gradeProduct(p, insDictionary)));
+    return NextResponse.json(gradedTrending);
   }
 
-  // Category filter endpoint
   if (category) {
-    const { INDIAN_PRODUCTS } = await import('@/lib/indian-products');
-    const filtered = INDIAN_PRODUCTS.filter(p => p.category.toLowerCase() === category.toLowerCase());
-    return NextResponse.json(filtered.slice(0, 16).map(p => gradeProduct(p)));
+    const res = await fetch(`${BACKEND_URL}/api/products`);
+    const products = await res.json();
+    const filtered = (Array.isArray(products) ? products : []).filter(p => p.category && p.category.toLowerCase() === category.toLowerCase());
+    const gradedFiltered = await Promise.all(filtered.slice(0, 16).map(p => gradeProduct(p, insDictionary)));
+    return NextResponse.json(gradedFiltered);
   }
 
   if (!query) {
     return NextResponse.json({ error: 'Missing search query' }, { status: 400 });
   }
 
-  // Return local results (instant, reliable)
-  const localResults = searchProducts(query);
-  return NextResponse.json(localResults.map(p => gradeProduct(p)));
+  const res = await fetch(`${BACKEND_URL}/api/products/search?q=${encodeURIComponent(query)}`);
+  const products = await res.json();
+  const gradedResults = await Promise.all((Array.isArray(products) ? products : []).map(p => gradeProduct(p, insDictionary)));
+  return NextResponse.json(gradedResults);
 }

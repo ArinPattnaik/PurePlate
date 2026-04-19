@@ -45,3 +45,9 @@ next-env.d.ts
 
 
 /src/generated/prisma
+
+# temporary dev logs
+dev-log.txt
+dev-error.txt
+dev-output.txt
+dev-output-new.txt

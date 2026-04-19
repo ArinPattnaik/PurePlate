@@ -1,78 +1,74 @@
 # PurePlate — India's Food Transparency Platform
 
 <p align="center">
-  <strong>🍃 Decode the truth behind Indian packaged food</strong>
+  <strong>🍃 Decode the truth behind Indian packaged food.</strong>
 </p>
 
-PurePlate is an algorithmic food transparency platform that analyzes the ingredients of Indian FMCG products. It parses ingredient lists, identifies hidden chemicals, INS food additive codes, deceptive sugars, and cheap fillers — exposing what's really inside your food.
+PurePlate is a full-stack algorithmic transparency platform that analyzes the ingredients of Indian FMCG products. It identifies hidden chemicals, INS additives, deceptive sugars, and low-quality fillers — providing consumers with a clear **Transparency Score** for every item.
 
-## Features
+## 🚀 Key Features
 
-- **120+ Indian Products** — Comprehensive database covering Maggi, Lay's, Parle-G, Amul, Cadbury, Haldiram's, and many more
-- **55+ Chemical Additives Tracked** — Full INS code dictionary with risk assessments
-- **12 FMCG Categories** — Instant Noodles, Chips & Snacks, Biscuits, Beverages, Dairy, Chocolates, and more
-- **Instant Search** — Local-first search with AI augmentation for products not in the database
-- **Transparency Score** — Algorithmic grading (1-10) based on chemical load, greenwashing, and ingredient quality
-- **Complete Ingredient Audit** — Flagged vs clean ingredients with INS code identification and risk descriptions
-- **Category Browsing** — Browse products by category with clickable chips
-- **Trending Products** — 8 curated popular products shown on the homepage
+- **325+ Indian Products Indexed** — Covering global and local brands like Maggi, Amul, Haldiram's, Nestle, Cadbury, and more.
+- **60+ Chemical Additives Tracked** — Comprehensive INS code dictionary with risk-level assessments (High/Moderate/Low).
+- **Algorithmic Grading (1-10)** — Real-time scoring based on ingredient quality, chemical load, and greenwashing tactics.
+- **AI-Powered Search Expansion** — Integrated with Gemini to analyze products not yet in the database.
+- **Responsive Web Interface** — High-performance UI built with Next.js and Tailwind CSS.
+- **Dockerized Database** — Robust PostgreSQL backend managed via Prisma ORM.
 
-## Tech Stack
+## 🏗️ Architecture
 
-- **Framework**: Next.js 16 (App Router + Turbopack)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Image Fallback**: Open Food Facts API + Branded SVG Placeholders
+- **Frontend**: Next.js 16 (App Router), Tailwind CSS v4, Framer Motion.
+- **Backend**: Node.js/Express API (TypeScript).
+- **Database**: PostgreSQL (Prisma ORM).
+- **Environment**: Containerized PostgreSQL via Docker Compose.
 
+## 🛠️ Quick Start
 
-## Project Structure
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18+)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for PostgreSQL)
 
-```
-src/
-├── app/
-│   ├── api/
-│   │   ├── search/route.ts    # Search API (local-first + AI)
-│   │   └── image/route.ts     # Image API (Open Food Facts + placeholders)
-│   ├── globals.css             # Global styles & utilities
-│   ├── layout.tsx              # Root layout with SEO
-│   └── page.tsx                # Main page (home, search, drawer)
-├── components/
-│   ├── AnimatedText.tsx        # Word-by-word text animation
-│   ├── DeepDiveTable.tsx       # Ingredient audit table
-│   ├── HeroAnimation.tsx       # Hero shield animation
-│   ├── IngredientPill.tsx      # INS code pill with tooltip
-│   ├── MethodologyView.tsx     # Methodology page view
-│   └── ProductCard.tsx         # Product display card
-├── constants/
-│   └── ins-dictionary.ts       # INS additive codes
-└── lib/
-    ├── indian-products.ts       # 120+ product database
-    ├── real-data.ts             # Types & expanded INS dictionary
-    └── utils.ts                 # Utility functions
+### 1. Database Setup
+Spin up the PostgreSQL container and seed the data:
+```bash
+cd backend
+docker-compose up -d
+npm install
+npx prisma db push
+npm run seed
 ```
 
-## How It Works
+### 2. Backend Setup
+Start the Express API server:
+```bash
+# Inside the /backend directory
+npm run dev
+```
 
-1. **Search** — Type a product name, brand, or category
-2. **Local-First** — Instant results from our 120+ product database
-3. **AI Augmentation** — Gemini fills gaps for products not in the database
-4. **Transparency Grading** — Every product gets algorithmically scored based on:
-   - INS code risk levels (High/Moderate/Low)
-   - Hidden sugars (Maltodextrin, Liquid Glucose, Invert Syrup)
-   - Refined flour (Maida) usage
-   - Palm oil / Palmolein content
-   - Hydrogenated fats (trans fat risk)
-   - Artificial colorings and flavorings
-5. **Ingredient Audit** — Full breakdown with flagged vs clean ingredients
+### 3. Frontend Setup
+Start the Next.js development server:
+```bash
+cd ..
+npm install
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to view the platform.
 
-## License
+## 🔑 Environment Variables
 
-MIT
+### Frontend (.env.local)
+- `GEMINI_API_KEY`: Your Google AI Studio key for search augmentation.
+- `BACKEND_URL`: URL of the Express backend (default: http://localhost:5000).
+
+### Backend (.env)
+- `DATABASE_URL`: Connection string for PostgreSQL.
+- `PORT`: API port (default: 5000).
+
+## 📄 License
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
 <p align="center">
-  <em>Built for Data Transparency. Powered by Algorithmic Intelligence.</em>
+  <em>Built for Food Transparency. Powered by Data Intelligence.</em>
 </p>

@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react';
-import { INS_DICTIONARY, RealProduct } from '@/lib/real-data';
-import { AlertTriangle, Info, CheckCircle, ShieldAlert, Beaker, Leaf } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { RealProduct } from '@/lib/real-data';
+import { AlertTriangle, Info, CheckCircle, ShieldAlert, Beaker, Leaf, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface DeepDiveTableProps {
@@ -12,11 +12,10 @@ interface DeepDiveTableProps {
 interface ParsedIngredient {
   originalName: string;
   insCode: string | null;
-  dictionaryEntry: (typeof INS_DICTIONARY)[string] | null;
+  dictionaryEntry: any | null;
   isChemical: boolean;
 }
 
-// Detect known chemical/processed ingredients even without INS codes
 function detectChemicalIngredient(name: string): { isChemical: boolean; concern: string | null } {
   const upper = name.toUpperCase();
   
@@ -49,9 +48,36 @@ function detectChemicalIngredient(name: string): { isChemical: boolean; concern:
 }
 
 export const DeepDiveTable: React.FC<DeepDiveTableProps> = ({ product }) => {
-  // Parse ingredients
+  const [insDictionary, setInsDictionary] = useState<Record<string, any>>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/ins')
+      .then(res => res.json())
+      .then(data => {
+        const map: Record<string, any> = {};
+        if (Array.isArray(data)) {
+          data.forEach(item => { map[item.code] = item; });
+        }
+        setInsDictionary(map);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-8 text-center flex flex-col items-center">
+        <Loader2 className="w-6 h-6 text-[#f7ac32] animate-spin mb-4" />
+        <p className="font-mono mt-2 text-[#f4ecd8]/40 uppercase tracking-widest text-xs">Loading ingredient dictionary...</p>
+      </div>
+    );
+  }
+
   const parsedIngredients: ParsedIngredient[] = product.ingredients.flatMap((ingredient): ParsedIngredient[] => {
-    // Look for INS codes: "INS 627", "INS 150c", "INS 500(ii)", "(INS 322)", also bare numbers like "(322)" in context
     const insRegex = /INS\s*(\d+[a-zA-Z]?(?:\([ivx]+\))?)/gi;
     const matches = [...ingredient.matchAll(insRegex)];
     
@@ -67,10 +93,9 @@ export const DeepDiveTable: React.FC<DeepDiveTableProps> = ({ product }) => {
     }
 
     return matches.map(match => {
-      // Normalize: remove parenthetical roman numerals for dictionary lookup
       const rawCode = match[1].replace(/\([ivx]+\)/i, '').toUpperCase();
       const dictKey = `INS ${rawCode}`;
-      const entry = INS_DICTIONARY[dictKey] || null;
+      const entry = insDictionary[dictKey] || null;
       return {
         originalName: ingredient,
         insCode: dictKey,
@@ -98,13 +123,11 @@ export const DeepDiveTable: React.FC<DeepDiveTableProps> = ({ product }) => {
     }
   };
 
-  // Separate: flagged ingredients first, then clean ones
   const flaggedIngredients = parsedIngredients.filter(i => i.dictionaryEntry || i.isChemical);
   const cleanIngredients = parsedIngredients.filter(i => !i.dictionaryEntry && !i.isChemical);
 
   return (
     <div className="w-full overflow-hidden">
-      {/* Flagged Ingredients Section */}
       {flaggedIngredients.length > 0 && (
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3 px-2">
@@ -186,7 +209,6 @@ export const DeepDiveTable: React.FC<DeepDiveTableProps> = ({ product }) => {
         </div>
       )}
 
-      {/* Clean Ingredients Section */}
       {cleanIngredients.length > 0 && (
         <div>
           <div className="flex items-center gap-2 mb-3 px-2">
