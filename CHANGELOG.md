@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.2.0...v1.3.0) (2026-04-19)
+
+
+### Features
+
+* unify full-stack into Next.js serverless architecture ([53e1911](https://github.com/ArinPattnaik/PurePlate/commit/53e1911d7579c20fb28426fa42ee63ef0f85d0b2))
+
+
+### Bug Fixes
+
+* resolve remaining lint errors in API routes ([e46311e](https://github.com/ArinPattnaik/PurePlate/commit/e46311e4a6046a66cc254f129d64a92019a6a2eb))
+* stabilize production database connection on Vercel ([88a2cae](https://github.com/ArinPattnaik/PurePlate/commit/88a2cae2237a87a9931a1b2e0f5e195628a1f4ac))
+
 ## [1.2.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.1.1...v1.2.0) (2026-04-19)
 
 
