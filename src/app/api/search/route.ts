@@ -31,8 +31,8 @@ async function getInsDictionary() {
       map[item.code] = item;
     });
     return map;
-  } catch (err) {
-    console.error("Failed to fetch INS dictionary", err);
+  } catch (err: any) {
+    console.error("DATABASE ERROR [getInsDictionary]:", err.message);
     return {};
   }
 }

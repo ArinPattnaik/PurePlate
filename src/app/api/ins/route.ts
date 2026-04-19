@@ -5,8 +5,12 @@ export async function GET() {
   try {
     const insEntries = await prisma.insEntry.findMany();
     return NextResponse.json(insEntries);
-  } catch (err) {
-    console.error("Failed to fetch INS dictionary from database", err);
-    return NextResponse.json({ error: "Failed to fetch INS dictionary" }, { status: 500 });
+  } catch (err: any) {
+    console.error("CRITICAL DATABASE ERROR [/api/ins]:", {
+      message: err.message,
+      stack: err.stack,
+      code: err.code
+    });
+    return NextResponse.json({ error: "Failed to fetch INS dictionary", details: err.message }, { status: 500 });
   }
 }
