@@ -51,3 +51,12 @@ dev-log.txt
 dev-error.txt
 dev-output.txt
 dev-output-new.txt
+
+# Agent and build artifacts
+dev-log.txt
+dev-error.txt
+dev-output.txt
+dev-output-new.txt
+*.tsbuildinfo
+.next/
+.vercel/
