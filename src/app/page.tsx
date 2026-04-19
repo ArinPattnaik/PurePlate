@@ -253,7 +253,7 @@ export default function Home() {
       {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-[#1c1a17]/90 backdrop-blur-md border-b border-[#f7ac32]/20">
         <div className="flex items-center justify-between px-4 md:px-6 py-3 max-w-7xl mx-auto">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="flex flex-col gap-1.5 z-50 mix-blend-difference text-[#f7ac32] hover:text-white transition-colors cursor-pointer">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden flex flex-col gap-1.5 z-50 mix-blend-difference text-[#f7ac32] hover:text-white transition-colors cursor-pointer">
             {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </button>
 
@@ -266,6 +266,11 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-6 mr-6 text-[10px] font-black uppercase tracking-[0.2em] text-[#f7ac32]/60">
+              <button onClick={navToHome} className="hover:text-[#f7ac32] transition-colors cursor-pointer">Home</button>
+              <button onClick={navToMethodology} className="hover:text-[#f7ac32] transition-colors cursor-pointer">Methodology</button>
+              <button onClick={navToWhatsNew} className="hover:text-[#f7ac32] transition-colors cursor-pointer">What&apos;s New</button>
+            </div>
             <button 
               onClick={() => navToDatabase()}
               className="px-3 py-1.5 md:px-4 md:py-2 font-bold uppercase tracking-widest cursor-pointer transition-all text-xs md:text-sm bg-[#f7ac32] text-[#1c1a17] hover:bg-white hover:scale-105"
@@ -326,7 +331,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-[2.75rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[8rem] leading-[0.85] font-black uppercase tracking-tighter text-[#f4ecd8] mb-6 drop-shadow-2xl"
+                className="text-[2.75rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[7rem] leading-[0.85] font-black uppercase tracking-tighter text-[#f4ecd8] mb-6 drop-shadow-2xl"
               >
                 decode your<br/>food
               </motion.h1>
@@ -370,9 +375,9 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="w-full mt-4 md:mt-10 overflow-hidden relative"
+              className="w-full mt-4 md:mt-8 overflow-hidden relative"
             >
-              <div className="flex overflow-x-auto no-scrollbar gap-2 md:gap-3 px-4 pb-4 flex-nowrap touch-pan-x scroll-smooth w-screen">
+              <div className="flex md:flex-wrap md:justify-center overflow-x-auto md:overflow-x-visible no-scrollbar gap-2 md:gap-3 px-4 md:px-6 pb-4 md:pb-0 flex-nowrap md:flex-wrap touch-pan-x scroll-smooth w-screen md:w-auto">
                 {CATEGORIES.map((cat, idx) => (
                   <motion.button
                     key={cat.name}
@@ -399,7 +404,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="w-full max-w-4xl mx-auto mt-16 grid grid-cols-3 gap-4 md:gap-8"
+              className="w-full max-w-4xl mx-auto mt-12 md:mt-16 grid grid-cols-3 gap-4 md:gap-8"
             >
               <div className="text-center">
                 <AnimatedCounter target={120} suffix="+" />
