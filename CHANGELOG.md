@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.1.1...v1.2.0) (2026-04-19)
+
+
+### Features
+
+* migrate to full-stack architecture and prepare for public release ([8637b41](https://github.com/ArinPattnaik/PurePlate/commit/8637b41f9d3ccc03b89641d1d318da87f8bce3ce))
+
+
+### Bug Fixes
+
+* resolve CI/CD and Vercel build failures ([232a10c](https://github.com/ArinPattnaik/PurePlate/commit/232a10c8327d6ef187def5376f1bc5571ae6ab5d))
+
 ## [1.1.1](https://github.com/ArinPattnaik/PurePlate/compare/v1.1.0...v1.1.1) (2026-04-18)
 
 
