@@ -49,9 +49,21 @@ function scoreProduct(ingredients: string[]): { score: number; redFlags: string[
 // PARSE src/lib/indian-products.ts with regex
 // extract each product object
 // ─────────────────────────────────────────────
-function parseProductsFromFile(filePath: string) {
+interface RawProduct {
+  id: string;
+  name: string;
+  brand: string;
+  category: string;
+  description: string;
+  weight: string;
+  isVeg: boolean;
+  ingredients: string[];
+  imageUrl: string | null;
+}
+
+function parseProductsFromFile(filePath: string): RawProduct[] {
   const content = fs.readFileSync(filePath, 'utf-8');
-  const products: any[] = [];
+  const products: RawProduct[] = [];
   
   // Match each { id: "...", ... imageUrl: null, } block
   const blockRegex = /\{\s*id:\s*"([^"]+)"[\s\S]*?imageUrl:\s*(null|"[^"]*"),?\s*\}/g;
@@ -230,8 +242,9 @@ async function main() {
         },
       });
       count++;
-    } catch (err: any) {
-      console.warn(`  ⚠ Skipped ${product.id}: ${err.message}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      console.warn(`  ⚠ Skipped ${product.id}: ${errorMessage}`);
     }
   }
 

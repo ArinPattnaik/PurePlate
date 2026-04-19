@@ -14,7 +14,7 @@ app.get('/api/products', async (req, res) => {
   try {
     const products = await prisma.product.findMany();
     res.json(products);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Failed to fetch products' });
   }
 });
@@ -36,7 +36,7 @@ app.get('/api/products/search', async (req, res) => {
       },
     });
     res.json(products);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Failed to search products' });
   }
 });
@@ -52,7 +52,7 @@ app.get('/api/products/:id', async (req, res) => {
       return res.status(404).json({ error: 'Product not found' });
     }
     res.json(product);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Failed to fetch product' });
   }
 });
@@ -62,7 +62,7 @@ app.get('/api/ins', async (req, res) => {
   try {
     const insEntries = await prisma.insEntry.findMany();
     res.json(insEntries);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Failed to fetch INS entries' });
   }
 });
@@ -81,7 +81,7 @@ app.get('/api/ins/:code', async (req, res) => {
       return res.status(404).json({ error: 'INS entry not found' });
     }
     res.json(insEntry);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'Failed to fetch INS entry' });
   }
 });

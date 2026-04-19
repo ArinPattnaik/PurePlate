@@ -9,10 +9,18 @@ interface DeepDiveTableProps {
   product: RealProduct;
 }
 
+interface INSEntry {
+  code: string;
+  name: string;
+  type: string;
+  risk: string;
+  description: string;
+}
+
 interface ParsedIngredient {
   originalName: string;
   insCode: string | null;
-  dictionaryEntry: any | null;
+  dictionaryEntry: INSEntry | null;
   isChemical: boolean;
 }
 
@@ -48,16 +56,16 @@ function detectChemicalIngredient(name: string): { isChemical: boolean; concern:
 }
 
 export const DeepDiveTable: React.FC<DeepDiveTableProps> = ({ product }) => {
-  const [insDictionary, setInsDictionary] = useState<Record<string, any>>({});
+  const [insDictionary, setInsDictionary] = useState<Record<string, INSEntry>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/ins')
       .then(res => res.json())
       .then(data => {
-        const map: Record<string, any> = {};
+        const map: Record<string, INSEntry> = {};
         if (Array.isArray(data)) {
-          data.forEach(item => { map[item.code] = item; });
+          data.forEach((item: INSEntry) => { map[item.code] = item; });
         }
         setInsDictionary(map);
         setLoading(false);

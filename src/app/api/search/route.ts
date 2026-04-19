@@ -2,11 +2,19 @@ import { NextResponse } from 'next/server';
 
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5000';
 
+interface INSEntry {
+  code: string;
+  name: string;
+  type: string;
+  risk: string;
+  description: string;
+}
+
 async function getInsDictionary() {
   try {
     const res = await fetch(`${BACKEND_URL}/api/ins`, { next: { revalidate: 3600 } });
-    const data = await res.json();
-    const map: Record<string, any> = {};
+    const data: INSEntry[] = await res.json();
+    const map: Record<string, INSEntry> = {};
     for (const item of data) {
       map[item.code] = item;
     }
@@ -17,7 +25,19 @@ async function getInsDictionary() {
   }
 }
 
-async function gradeProduct(item: any, insDictionary: Record<string, any>) {
+interface Product {
+  id?: string;
+  name?: string;
+  brand?: string;
+  category?: string;
+  description?: string;
+  weight?: string;
+  isVeg?: boolean;
+  ingredients?: string[] | Record<string, string>;
+  imageUrl?: string | null;
+}
+
+async function gradeProduct(item: Product, insDictionary: Record<string, INSEntry>) {
   const ingredientsList = Array.isArray(item.ingredients) ? item.ingredients : Object.values(item.ingredients || {});
   const allTextToScan = ingredientsList.join(' ').toUpperCase();
 
