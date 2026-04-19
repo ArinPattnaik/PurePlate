@@ -144,7 +144,8 @@ export const DeepDiveTable: React.FC<DeepDiveTableProps> = ({ product }) => {
               Flagged Ingredients ({flaggedIngredients.length})
             </span>
           </div>
-          <div className="rounded-lg border border-[#E0005C]/20 overflow-hidden">
+          {/* Desktop Table View */}
+          <div className="hidden md:block rounded-lg border border-[#E0005C]/20 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-[#f4ecd8] font-sans">
                 <thead className="text-xs uppercase bg-[#E0005C]/5 border-b border-[#E0005C]/20 text-[#E0005C]">
@@ -213,6 +214,61 @@ export const DeepDiveTable: React.FC<DeepDiveTableProps> = ({ product }) => {
                 </tbody>
               </table>
             </div>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden flex flex-col gap-3">
+            {flaggedIngredients.map((item, idx) => {
+              const chemInfo = detectChemicalIngredient(item.originalName);
+              return (
+                <div key={idx} className="bg-[#1c1a17] border border-[#E0005C]/30 p-4 rounded-lg">
+                  <div className="flex items-start justify-between mb-3">
+                    <h4 className="font-black text-[#f4ecd8] uppercase text-sm flex-1 mr-2">
+                      {item.originalName.replace(/\(INS\s*\d+[a-zA-Z]?(?:\([ivx]+\))?(,\s*INS\s*\d+[a-zA-Z]?(?:\([ivx]+\))?)*\)/gi, '').trim() || item.originalName}
+                    </h4>
+                    {item.insCode && (
+                      <span className="font-mono text-[10px] bg-[#f7ac32]/10 text-[#f7ac32] px-2 py-0.5 rounded border border-[#f7ac32]/30">
+                        {item.insCode}
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="mb-3">
+                    {item.dictionaryEntry ? (
+                      <div className="flex flex-col">
+                        <span className="text-xs text-[#f4ecd8]/50 uppercase tracking-widest mb-1">{item.dictionaryEntry.type}</span>
+                        <span className="font-bold text-[#f7ac32] text-sm">{item.dictionaryEntry.name}</span>
+                      </div>
+                    ) : (
+                      <span className="text-[10px] text-[#f4ecd8]/40 uppercase font-mono">Processed Ingredient</span>
+                    )}
+                  </div>
+
+                  <div className="pt-3 border-t border-[#E0005C]/10">
+                    {item.dictionaryEntry ? (
+                      <div className="flex flex-col gap-2">
+                        <div className={cn("inline-flex items-center w-max px-2 py-0.5 rounded-full text-[10px] font-bold border", getRiskColor(item.dictionaryEntry.risk))}>
+                          {getRiskIcon(item.dictionaryEntry.risk)}
+                          {item.dictionaryEntry.risk} Risk
+                        </div>
+                        <p className="text-xs text-[#f4ecd8]/60 leading-relaxed font-mono">
+                          {item.dictionaryEntry.description}
+                        </p>
+                      </div>
+                    ) : chemInfo.concern ? (
+                      <div className="flex flex-col gap-2">
+                        <div className="inline-flex items-center w-max px-2 py-0.5 rounded-full text-[10px] font-bold border text-[#f7ac32] bg-[#f7ac32]/10 border-[#f7ac32]/30">
+                          <Info className="w-3 h-3 mr-1" /> Concern
+                        </div>
+                        <p className="text-xs text-[#f4ecd8]/60 leading-relaxed font-mono">
+                          {chemInfo.concern}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

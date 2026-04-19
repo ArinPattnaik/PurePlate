@@ -326,7 +326,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-[3rem] md:text-[6rem] lg:text-[8rem] leading-[0.85] font-black uppercase tracking-tighter text-[#f4ecd8] mb-6 drop-shadow-2xl"
+                className="text-[2.75rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[8rem] leading-[0.85] font-black uppercase tracking-tighter text-[#f4ecd8] mb-6 drop-shadow-2xl"
               >
                 decode your<br/>food
               </motion.h1>
@@ -344,22 +344,18 @@ export default function Home() {
             {/* SEARCH BAR */}
             <div className="w-full max-w-7xl mx-auto flex flex-col items-center text-center relative z-10 mt-4" id="search">
               <div className="max-w-2xl mx-auto flex flex-col items-center w-full">
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="w-full relative shadow-[0_0_40px_-5px_rgba(247,172,50,0.3)] transition-all focus-within:shadow-[0_0_60px_-5px_rgba(247,172,50,0.5)]"
+                  className="w-full relative shadow-[0_0_40px_-5px_rgba(247,172,50,0.3)] transition-all focus-within:shadow-[0_0_60px_-5px_rgba(247,172,50,0.5)] group"
                 >
                   <input
                     id="search-input"
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search Maggi, Lay's, Parle-G, Amul..."
-                    className="w-full bg-[#1c1a17] border-2 md:border-4 border-[#f7ac32] text-white px-6 md:px-8 py-4 md:py-5 text-lg md:text-2xl font-black uppercase tracking-widest outline-none focus:bg-[#252320] transition-colors placeholder:text-[#f4ecd8]/20"
+                    placeholder="Search Products..."
+                    className="w-full bg-[#1c1a17] border-2 md:border-4 border-[#f7ac32] text-white px-5 md:px-8 py-4 md:py-5 text-base md:text-2xl font-black uppercase tracking-widest outline-none focus:bg-[#252320] transition-all placeholder:text-[#f4ecd8]/20"
                   />
-                  <div className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 text-[#f7ac32]">
-                    {isSearching ? <Loader2 className="w-6 h-6 md:w-8 md:h-8 animate-spin" /> : <Search className="w-6 h-6 md:w-8 md:h-8" />}
+                  <div className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 text-[#f7ac32] group-hover:scale-110 transition-transform">
+                    {isSearching ? <Loader2 className="w-5 h-5 md:w-8 md:h-8 animate-spin" /> : <Search className="w-5 h-5 md:w-8 md:h-8" />}
                   </div>
                 </motion.div>
               </div>
@@ -370,24 +366,27 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="w-full max-w-4xl mx-auto mt-6 md:mt-8"
+              className="w-full max-w-7xl mx-auto mt-8 md:mt-10 overflow-hidden relative"
             >
-              <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-                {CATEGORIES.map((cat) => (
-                  <button
+              {/* Horizontal Scroll Containers - Mobile First */}
+              <div className="flex overflow-x-auto no-scrollbar pb-4 gap-2 md:gap-3 px-4 scroll-smooth">
+                {CATEGORIES.map((cat, idx) => (
+                  <motion.button
                     key={cat.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7 + (idx * 0.03) }}
                     onClick={() => handleCategoryClick(cat.name)}
                     className={cn(
-                      "px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer border rounded-sm flex items-center gap-1.5 hover:scale-105",
+                      "px-4 py-2 text-[10px] md:text-sm font-bold uppercase tracking-widest transition-all cursor-pointer border rounded-full flex items-center gap-2 whitespace-nowrap flex-shrink-0 active:scale-95",
                       activeCategory === cat.name
-                        ? "bg-[#f7ac32] text-[#1c1a17] border-[#f7ac32]"
-                        : "bg-transparent text-[#f4ecd8]/60 border-[#f4ecd8]/15 hover:border-[#f7ac32]/50 hover:text-[#f7ac32]"
+                        ? "bg-[#f7ac32] text-[#1c1a17] border-[#f7ac32] shadow-[0_0_20px_rgba(247,172,50,0.4)]"
+                        : "bg-[#252320] text-[#f4ecd8]/60 border-[#f7ac32]/20 hover:border-[#f7ac32]/60 hover:text-[#f7ac32]"
                     )}
                   >
                     <span>{cat.emoji}</span>
-                    <span className="hidden sm:inline">{cat.name}</span>
-                    <span className="sm:hidden">{cat.name.split(' ')[0]}</span>
-                  </button>
+                    <span>{cat.name}</span>
+                  </motion.button>
                 ))}
               </div>
             </motion.div>
@@ -553,11 +552,16 @@ export default function Home() {
                     {searchResults.map((product, idx) => (
                       <motion.div
                         key={product.id}
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.05 }}
+                        initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ 
+                          type: "spring", 
+                          damping: 25, 
+                          stiffness: 300,
+                          delay: (idx % 8) * 0.05 
+                        }}
                         onClick={() => handleProductSelect(product)}
-                        className="bg-[#1c1a17] border border-[#f7ac32]/10 hover:border-[#f7ac32]/60 cursor-pointer group flex flex-col overflow-hidden transition-all hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(247,172,50,0.1)]"
+                        className="bg-[#1c1a17] border border-[#f7ac32]/10 hover:border-[#f7ac32]/60 cursor-pointer group flex flex-col overflow-hidden transition-all hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(247,172,50,0.15)] ring-[#f7ac32]/0 hover:ring-2"
                       >
                         <ProductImageCard product={product} />
                         <div className="p-3 md:p-4 flex-1 flex flex-col">
@@ -614,11 +618,11 @@ export default function Home() {
             <div className="absolute inset-0 cursor-pointer" onClick={() => setSelectedProduct(null)} />
             
             <motion.div 
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="relative h-full w-full md:w-[600px] lg:w-[800px] bg-[#1c1a17] border-l-[3px] border-[#f7ac32] shadow-[-20px_0_40px_rgba(0,0,0,0.5)] flex flex-col overflow-y-auto"
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 0 }}
+              transition={{ type: "spring", damping: 32, stiffness: 350, mass: 0.8 }}
+              className="relative h-[92vh] mt-auto md:h-full w-full md:w-[600px] lg:w-[800px] bg-[#1c1a17] border-t-2 md:border-t-0 md:border-l-[3px] border-[#f7ac32] shadow-[-20px_0_40px_rgba(0,0,0,0.5)] flex flex-col overflow-y-auto rounded-t-[2rem] md:rounded-t-none"
             >
               {/* Close Button Header */}
               <div className="sticky top-0 z-20 bg-[#1c1a17]/95 backdrop-blur-md border-b border-[#f7ac32]/30 px-4 py-3 md:p-4 flex justify-between items-center">

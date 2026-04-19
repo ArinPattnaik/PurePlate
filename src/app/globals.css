@@ -100,12 +100,16 @@ html {
   color: inherit;
 }
 
-/* Hide scrollbar but keep scrollable */
-::-webkit-scrollbar-button {transition: 0ms !important;width: 0px;height: 0px;}
-::-webkit-scrollbar-track {background: transparent;}
-::-webkit-scrollbar-thumb {-webkit-border-radius: 0px;border-radius: 0px;background: transparent;opacity:0;}
-::-webkit-resizer {width: 0px;height: 0px;}
-::-webkit-scrollbar {width: 0px;}
+/* No Scrollbar Utility */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
 
 /* Grain texture overlay */
 .grain_texture::before {
