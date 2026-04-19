@@ -31,8 +31,9 @@ async function getInsDictionary() {
       map[item.code] = item;
     });
     return map;
-  } catch (err: any) {
-    console.error("DATABASE ERROR [getInsDictionary]:", err.message);
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err : new Error(String(err));
+    console.error("DATABASE ERROR [getInsDictionary]:", error.message);
     return {};
   }
 }
