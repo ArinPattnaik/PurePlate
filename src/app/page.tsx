@@ -363,13 +363,13 @@ export default function Home() {
 
             {/* CATEGORY CHIPS */}
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="w-full max-w-7xl mx-auto mt-8 md:mt-10 overflow-hidden relative"
+              className="w-full max-w-7xl mx-auto mt-8 md:mt-10 relative px-4"
             >
-              {/* Horizontal Scroll Containers - Mobile First */}
-              <div className="flex overflow-x-auto no-scrollbar pb-4 gap-2 md:gap-3 px-4 scroll-smooth">
+              {/* Horizontal Scroll Containers */}
+              <div className="flex overflow-x-auto no-scrollbar gap-2 md:gap-3 pb-4 flex-nowrap touch-pan-x scroll-smooth">
                 {CATEGORIES.map((cat, idx) => (
                   <motion.button
                     key={cat.name}
@@ -622,8 +622,11 @@ export default function Home() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 32, stiffness: 350, mass: 0.8 }}
-              className="relative h-[92vh] mt-auto md:h-full w-full md:w-[600px] lg:w-[800px] bg-[#1c1a17] border-t-2 md:border-t-0 md:border-l-[3px] border-[#f7ac32] shadow-[-20px_0_40px_rgba(0,0,0,0.5)] flex flex-col overflow-y-auto rounded-t-[2rem] md:rounded-t-none"
+              className="relative h-[92vh] mt-auto md:h-full w-full md:w-[600px] lg:w-[800px] bg-[#1c1a17] border-t-2 md:border-t-0 md:border-l-[3px] border-[#f7ac32] shadow-[-20px_0_40px_rgba(0,0,0,0.5)] flex flex-col overflow-y-auto rounded-t-[2.5rem] md:rounded-t-none"
             >
+              {/* Mobile Drag Handle */}
+              <div className="w-12 h-1.5 bg-[#f7ac32]/20 rounded-full mx-auto mt-4 mb-2 md:hidden" />
+
               {/* Close Button Header */}
               <div className="sticky top-0 z-20 bg-[#1c1a17]/95 backdrop-blur-md border-b border-[#f7ac32]/30 px-4 py-3 md:p-4 flex justify-between items-center">
                 <div className="flex items-center gap-2">
