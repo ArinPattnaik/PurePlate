@@ -344,6 +344,10 @@ export default function Home() {
             {/* SEARCH BAR */}
             <div className="w-full max-w-7xl mx-auto flex flex-col items-center text-center relative z-10 mt-4" id="search">
               <div className="max-w-2xl mx-auto flex flex-col items-center w-full">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 }}
                   className="w-full relative shadow-[0_0_40px_-5px_rgba(247,172,50,0.3)] transition-all focus-within:shadow-[0_0_60px_-5px_rgba(247,172,50,0.5)] group"
                 >
                   <input
