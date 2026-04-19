@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.1](https://github.com/ArinPattnaik/PurePlate/compare/v1.4.0...v1.4.1) (2026-04-19)
+
+
+### Bug Fixes
+
+* resolve desktop UI glitches ([d6467b6](https://github.com/ArinPattnaik/PurePlate/commit/d6467b6a65ccdcc432a07f35b5d66fa3554653fb))
+* restore centered logo header with left burger and right search ([cbee97f](https://github.com/ArinPattnaik/PurePlate/commit/cbee97f087ee2fb8f1d9226041f3b01c71b206cb))
+* restore standard header layout (Logo Left, Nav Right) ([ccaae2f](https://github.com/ArinPattnaik/PurePlate/commit/ccaae2fae5c1872d09b2b3e760a3a9aaee45a839))
+
 ## [1.4.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.3.0...v1.4.0) (2026-04-19)
 
 
