@@ -366,10 +366,9 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="w-full max-w-7xl mx-auto mt-8 md:mt-10 relative px-4"
+              className="w-full mt-4 md:mt-10 overflow-hidden relative"
             >
-              {/* Horizontal Scroll Containers */}
-              <div className="flex overflow-x-auto no-scrollbar gap-2 md:gap-3 pb-4 flex-nowrap touch-pan-x scroll-smooth">
+              <div className="flex overflow-x-auto no-scrollbar gap-2 md:gap-3 px-4 pb-4 flex-nowrap touch-pan-x scroll-smooth w-screen">
                 {CATEGORIES.map((cat, idx) => (
                   <motion.button
                     key={cat.name}
