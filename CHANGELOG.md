@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.3.0...v1.4.0) (2026-04-19)
+
+
+### Features
+
+* premium mobile optimization and animation suite ([ae20ed4](https://github.com/ArinPattnaik/PurePlate/commit/ae20ed4c66df87b501de37f128519a8bb49ff286))
+
+
+### Bug Fixes
+
+* explicit flex-nowrap for category scroll and cache bust ([7cb4415](https://github.com/ArinPattnaik/PurePlate/commit/7cb441563c5e5b536853973b4c268364fac9b16e))
+* restore missing motion.div tag and resolve JSX parsing error ([8e8b257](https://github.com/ArinPattnaik/PurePlate/commit/8e8b257a106ff691652b556aceea389e2bd9c586))
+
 ## [1.3.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.2.0...v1.3.0) (2026-04-19)
 
 
