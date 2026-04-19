@@ -252,30 +252,35 @@ export default function Home() {
       
       {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-[#1c1a17]/90 backdrop-blur-md border-b border-[#f7ac32]/20">
-        <div className="flex items-center justify-between px-4 md:px-6 py-3 max-w-7xl mx-auto">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden flex flex-col gap-1.5 z-50 mix-blend-difference text-[#f7ac32] hover:text-white transition-colors cursor-pointer">
-            {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-          </button>
-
+        <div className="flex items-center justify-between px-4 md:px-8 py-3 max-w-7xl mx-auto w-full">
+          {/* LEFT: Logo (Mobile & Desktop) */}
           <div 
-            className="text-xl md:text-2xl font-black uppercase tracking-[0.2em] text-[#f7ac32] absolute left-1/2 -translate-x-1/2 cursor-pointer hover:text-white transition-colors flex items-center gap-2"
+            className="flex items-center gap-2 text-xl md:text-2xl font-black uppercase tracking-[0.2em] text-[#f7ac32] cursor-pointer hover:text-white transition-colors"
             onClick={navToHome}
           >
             <Leaf className="w-5 h-5 md:w-6 md:h-6" />
-            PurePlate
+            <span className="hidden sm:inline">PurePlate</span>
+            <span className="sm:hidden text-lg">PP</span>
           </div>
 
+          {/* RIGHT: Navigation & Actions */}
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-6 mr-6 text-[10px] font-black uppercase tracking-[0.2em] text-[#f7ac32]/60">
+            <div className="hidden md:flex items-center gap-8 mr-8 text-[10px] font-bold uppercase tracking-[0.20em] text-[#f4ecd8]/40">
               <button onClick={navToHome} className="hover:text-[#f7ac32] transition-colors cursor-pointer">Home</button>
               <button onClick={navToMethodology} className="hover:text-[#f7ac32] transition-colors cursor-pointer">Methodology</button>
               <button onClick={navToWhatsNew} className="hover:text-[#f7ac32] transition-colors cursor-pointer">What&apos;s New</button>
             </div>
+            
             <button 
               onClick={() => navToDatabase()}
-              className="px-3 py-1.5 md:px-4 md:py-2 font-bold uppercase tracking-widest cursor-pointer transition-all text-xs md:text-sm bg-[#f7ac32] text-[#1c1a17] hover:bg-white hover:scale-105"
+              className="px-4 py-2 font-black uppercase tracking-widest cursor-pointer transition-all text-[10px] md:text-xs bg-[#f7ac32] text-[#1c1a17] hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(247,172,50,0.2)]"
             >
               Search
+            </button>
+
+            {/* Mobile Menu Trigger */}
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden ml-2 mix-blend-difference text-[#f7ac32] hover:text-white transition-colors cursor-pointer">
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
