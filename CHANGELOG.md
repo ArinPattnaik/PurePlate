@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/ArinPattnaik/PurePlate/compare/v1.4.1...v1.5.0) (2026-04-20)
+
+
+### Features
+
+* expand product database to 320+ items with scoring engine v2 and new categories ([cc228e3](https://github.com/ArinPattnaik/PurePlate/commit/cc228e369cf4da63b87732cf6a926678ae7fb7b8))
+
 ## [1.4.1](https://github.com/ArinPattnaik/PurePlate/compare/v1.4.0...v1.4.1) (2026-04-19)
 
 
