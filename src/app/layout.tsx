@@ -19,12 +19,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PurePlate | India's Food Transparency Platform",
-  description: "Decode the truth behind Indian packaged food. PurePlate algorithmically analyzes ingredients of 120+ Indian FMCG products, exposing hidden chemicals, deceptive sugars, and synthetic additives. Search Maggi, Lay's, Parle-G, Amul and more.",
-  keywords: ["food transparency", "Indian FMCG", "ingredient analysis", "INS codes", "food additives", "PurePlate", "packaged food India", "Maggi ingredients", "food chemicals"],
+  title: "PurePlate | India's Food Transparency Platform — 320+ Products Analyzed",
+  description: "Decode the truth behind Indian packaged food. PurePlate algorithmically analyzes ingredients of 320+ Indian FMCG products, exposing hidden chemicals, deceptive sugars, and synthetic additives. Search Maggi, Lay's, Parle-G, Amul, Kurkure, Cadbury and more.",
+  keywords: ["food transparency", "Indian FMCG", "ingredient analysis", "INS codes", "food additives", "PurePlate", "packaged food India", "Maggi ingredients", "food chemicals", "healthy food India", "food safety"],
   openGraph: {
     title: "PurePlate — Decode Your Food",
-    description: "India's first algorithmic food transparency platform. Search 120+ products to see what's really inside your food.",
+    description: "India's first algorithmic food transparency platform. Search 320+ products to see what's really inside your food.",
     type: "website",
     locale: "en_IN",
   },

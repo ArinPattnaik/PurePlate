@@ -15,54 +15,28 @@ PurePlate is a full-stack algorithmic transparency platform that analyzes the in
 - **Responsive Web Interface** — High-performance UI built with Next.js and Tailwind CSS.
 - **Dockerized Database** — Robust PostgreSQL backend managed via Prisma ORM.
 
-## 🏗️ Architecture
+## � How It Works
 
-- **Frontend**: Next.js 16 (App Router), Tailwind CSS v4, Framer Motion.
-- **Backend**: Node.js/Express API (TypeScript).
-- **Database**: PostgreSQL (Prisma ORM).
-- **Environment**: Containerized PostgreSQL via Docker Compose.
+**PurePlate** empowers Indian consumers to make informed food choices by:
 
-## 🛠️ Quick Start
+1. **Ingredient Analysis** — Every product is analyzed for harmful chemicals, artificial additives, and deceptive marketing.
+2. **Transparency Scoring** — Products receive a 1-10 score based on ingredient quality, chemical load, and nutritional value.
+3. **Smart Search** — Can't find a product? Our AI-powered search uses Google Gemini to analyze new products on demand.
+4. **Risk Assessment** — Each chemical additive is categorized by health risk level (High/Moderate/Low) with detailed explanations.
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18+)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for PostgreSQL)
+## � Why PurePlate?
 
-### 1. Database Setup
-Spin up the PostgreSQL container and seed the data:
-```bash
-cd backend
-docker-compose up -d
-npm install
-npx prisma db push
-npm run seed
-```
+- **Hidden Chemicals Exposed** — Discover what's really in your food beyond marketing claims.
+- **Greenwashing Detection** — Identify products using deceptive "natural" or "healthy" labels.
+- **Comprehensive Database** — 325+ Indian products from trusted brands, constantly expanding.
+- **Real-Time Scoring** — Instant transparency scores help you compare products at a glance.
 
-### 2. Backend Setup
-Start the Express API server:
-```bash
-# Inside the /backend directory
-npm run dev
-```
+## 🏗️ Built With
 
-### 3. Frontend Setup
-Start the Next.js development server:
-```bash
-cd ..
-npm install
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) to view the platform.
-
-## 🔑 Environment Variables
-
-### Frontend (.env.local)
-- `GEMINI_API_KEY`: Your Google AI Studio key for search augmentation.
-- `BACKEND_URL`: URL of the Express backend (default: http://localhost:5000).
-
-### Backend (.env)
-- `DATABASE_URL`: Connection string for PostgreSQL.
-- `PORT`: API port (default: 5000).
+- **Frontend**: Next.js 16 (App Router), Tailwind CSS v4, Framer Motion — for a fast, responsive experience.
+- **Backend**: Node.js/Express API (TypeScript) — robust and scalable.
+- **Database**: PostgreSQL with Prisma ORM — reliable data management.
+- **AI Integration**: Google Gemini API — intelligent product analysis.
 
 ## 📄 License
 MIT License - see [LICENSE](LICENSE) for details.

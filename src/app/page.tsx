@@ -104,6 +104,28 @@ function getBrandAccent(brand: string): string {
     "Pepsi": "#004B93", "Thums Up": "#E31837", "Amul": "#FFD700", "Patanjali": "#FF8C00",
     "Fortune": "#003DA5", "Saffola": "#008000", "MDH": "#E31837", "Everest": "#E31837",
     "Kissan": "#E31837", "KitKat": "#E31837", "Frooti": "#FFD700", "Bournvita": "#4B0082",
+    "Top Ramen": "#E31837", "Ching's Secret": "#FF6600", "Knorr": "#008000",
+    "Sunfeast Yippee": "#D4001A", "Bikano": "#8B0000", "Act II": "#E31837",
+    "Pringles": "#E31837", "Too Yumm!": "#008000", "Uncle Chipps": "#FF6600",
+    "Ferrero": "#8B4513", "Mars": "#8B0000", "Snickers": "#8B4513",
+    "McVitie's": "#003DA5", "Unibic": "#8B4513", "PepsiCo": "#004B93",
+    "Paper Boat": "#006400", "Tropicana": "#FF8C00", "Real": "#006400",
+    "Horlicks": "#FF8C00", "Complan": "#003DA5", "Mondelez": "#4B0082",
+    "Red Bull": "#003DA5", "Hershey's": "#8B4513", "Veeba": "#E31837",
+    "Funfoods": "#FFD700", "Del Monte": "#006400", "Sundrop": "#FFD700",
+    "Dabur": "#006400", "MTR": "#FFD700", "Gits": "#E31837",
+    "Wai Wai": "#E31837", "Nissin": "#E31837", "Balaji": "#FFD700",
+    "Diamond": "#006400", "Cornitos": "#FF6600", "Tata": "#003DA5",
+    "Daawat": "#003DA5", "India Gate": "#003DA5", "Lijjat": "#FFD700",
+    "Kwality Wall's": "#003DA5", "Baskin Robbins": "#FF69B4", "Havmor": "#003DA5",
+    "Naturals": "#006400", "Mother Dairy": "#006400", "Epigamia": "#4B0082",
+    "Go": "#FFD700", "Yakult": "#E31837", "DS Group": "#006400",
+    "Perfetti": "#003DA5", "ITC Kitchens of India": "#003366",
+    "Yoga Bar": "#006400", "Bagrry's": "#8B4513", "True Elements": "#006400",
+    "Soulfull": "#FF8C00", "Protinex": "#003DA5", "Abbott": "#003DA5",
+    "Raw Pressery": "#006400", "Bisleri": "#003DA5", "Weikfield": "#E31837",
+    "Hellmann's": "#003DA5", "Oleev": "#006400", "Dhara": "#FFD700",
+    "Catch": "#E31837", "Suhana": "#E31837", "Tang": "#FF8C00",
   };
   return colors[brand] || '#f7ac32';
 }
@@ -122,6 +144,7 @@ const CATEGORIES: { name: ProductCategory; emoji: string }[] = [
   { name: "Masala & Spices", emoji: "🌶️" },
   { name: "Atta & Staples", emoji: "🌾" },
   { name: "Cooking Oil", emoji: "🫒" },
+  { name: "Ice Cream", emoji: "🍦" },
 ];
 
 
@@ -305,7 +328,7 @@ export default function Home() {
               <button onClick={navToWhatsNew} className="hover:text-white text-left uppercase transition-colors">What&apos;s New</button>
             </div>
             <div className="mt-auto pb-12 text-[#1c1a17]/60 font-mono text-sm uppercase tracking-widest">
-              <p>250+ Indian Products Indexed</p>
+              <p>320+ Indian Products Indexed</p>
               <p className="mt-2 text-xs">Based on NOVA Methodology</p>
             </div>
           </motion.div>
@@ -414,15 +437,15 @@ export default function Home() {
               className="w-full max-w-4xl mx-auto mt-12 md:mt-16 grid grid-cols-3 gap-4 md:gap-8"
             >
               <div className="text-center">
-                <AnimatedCounter target={120} suffix="+" />
+                <AnimatedCounter target={320} suffix="+" />
                 <p className="text-xs md:text-sm font-mono uppercase tracking-widest text-[#f4ecd8]/40 mt-1">Products Indexed</p>
               </div>
               <div className="text-center">
-                <AnimatedCounter target={55} suffix="+" />
+                <AnimatedCounter target={60} suffix="+" />
                 <p className="text-xs md:text-sm font-mono uppercase tracking-widest text-[#f4ecd8]/40 mt-1">Chemicals Tracked</p>
               </div>
               <div className="text-center">
-                <AnimatedCounter target={12} />
+                <AnimatedCounter target={13} />
                 <p className="text-xs md:text-sm font-mono uppercase tracking-widest text-[#f4ecd8]/40 mt-1">Categories</p>
               </div>
             </motion.div>
@@ -793,9 +816,9 @@ export default function Home() {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-widest text-[#f4ecd8]/60 mb-3">Database</h4>
               <div className="flex flex-col gap-1.5 text-xs font-mono uppercase tracking-widest text-[#f4ecd8]/30">
-                <span>250+ Indian Products</span>
-                <span>55+ Chemical Additives</span>
-                <span>12 FMCG Categories</span>
+                <span>320+ Indian Products</span>
+                <span>60+ Chemical Additives</span>
+                <span>13 FMCG Categories</span>
                 <span>Real Ingredient Data</span>
               </div>
             </div>
